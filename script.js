@@ -1,5 +1,6 @@
 // client-side library logic
 const myLibrary = [];
+renderLibrary(myLibrary);
 
 function Book(title, author, pages, haveRead) {
     this.title = title;
@@ -13,22 +14,26 @@ function addBookToLibrary(book) {
     updateLibrary();
 };
 
-const mockingbird = new Book("To Kill a Mockingbird", "Harper Lee", 281, false);
+function removeBookFromLibrary(id) {
+    myLibrary.splice(id, 1);
+    updateLibrary();
+}
+
+// dummy books
 const eatThatFrog = new Book("Eat That Frog", "Brian Tracy", 144, true);
 const healYourLife = new Book("You Can Heal Your Life", "Louise Hay", 272, false);
 // const lawsOfPower = new Book("The 48 Laws of Power", "Robert Greene", 452, true);
 // const superiorMan = new Book("The Way of the Superior Man", "David Deida", 224, false);
 // const cantHurtMe = new Book("Can't Hurt Me", "David Goggins", 364, true);
 // const talkToAnyone = new Book("How to Talk to Anyone", "Leil Lowndes", 368, true);
-// const mobyDick = new Book("Moby-Dick", "Herman Melville", 635, false);
 // const rudestBookEver = new Book("The Rudest Book Ever", "Shwetabh Gangwar", 232, false);
 // const braveNewWorld = new Book("Brave New World", "Aldous Huxley", 311, true);
+// const mockingbird = new Book("To Kill a Mockingbird", "Harper Lee", 281, false);
+// const mobyDick = new Book("Moby-Dick", "Herman Melville", 635, false);
 
+addBookToLibrary(eatThatFrog);
+addBookToLibrary(healYourLife);
 
-function removeBookFromLibrary(id) {
-    myLibrary.splice(id, 1);
-    updateLibrary();
-}
 
 
 // library render logic
@@ -83,7 +88,13 @@ function renderLibrary(library) {
     });
 };
 
-renderLibrary(myLibrary);
+function updateLibrary() {
+    // re-render library with updated books in library object
+    const library = document.querySelector('.library-grid');
+    library.innerHTML = '';
+    renderLibrary(myLibrary);
+}
+
 
 
 // form logic
@@ -117,15 +128,3 @@ addBook.addEventListener('submit', (e) => {
 
     dialog.close();
 });
-
-
-function updateLibrary() {
-    // re-render library with updated books in library object
-    const library = document.querySelector('.library-grid');
-    library.innerHTML = '';
-    renderLibrary(myLibrary);
-}
-
-
-addBookToLibrary(eatThatFrog);
-addBookToLibrary(healYourLife);
