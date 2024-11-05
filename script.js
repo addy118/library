@@ -1,4 +1,6 @@
 // client-side library logic
+
+// Book() constructor
 function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
@@ -11,6 +13,8 @@ function Book(title, author, pages, haveRead) {
     }
 };
 
+
+// Library() constructor
 function Library() {
     this.books = []
 }
@@ -64,7 +68,7 @@ Library.prototype.render = function (books) {
         const readBtn = document.createElement('button');
         readBtn.textContent = 'Read'
 
-        // append elements
+        // append elements (add to DOM)
         bookEl.appendChild(titleEl);
         bookEl.appendChild(authorEl);
         bookEl.appendChild(pagesEl);
@@ -138,7 +142,6 @@ library.addBook(eatThatFrog);
 library.addBook(healYourLife);
 
 
-// dummy data for book objects:
 // const lawsOfPower = new Book("The 48 Laws of Power", "Robert Greene", 452, true);
 // const superiorMan = new Book("The Way of the Superior Man", "David Deida", 224, false);
 // const cantHurtMe = new Book("Can't Hurt Me", "David Goggins", 364, true);
