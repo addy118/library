@@ -1,100 +1,103 @@
-// client-side library logic
+// CLASSES VERSION
 
-// Book() constructor
-function Book(title, author, pages, haveRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.haveRead = haveRead;
-
-    // constructor method (used for private variables)
-    this.toggleReadStatus = function () {
-        this.haveRead = !this.haveRead;
+// Book class
+class Book {
+    constructor(title, author, pages, haveRead) {
+        // public properties
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.haveRead = haveRead;
     }
+
+    // public method
+    toggleReadStatus() {
+        this.haveRead = !this.haveRead;
+    };
 };
 
 
-// Library() constructor
-function Library() {
-    this.books = []
-}
+// Library class
+class Library {
+    // public field
+    books = [];
 
-// prototype methods (used for efficient memory usage)
-Library.prototype.addBook = function (book) {
-    this.books.push(book);
-    this.update();
-};
+    // public methods
+    addBook(book) {
+        this.books.push(book);
+        this.update();
+    };
 
-Library.prototype.removeBook = function (id) {
-    this.books.splice(id, 1);
-    this.update();
-}
+    removeBook(id) {
+        this.books.splice(id, 1);
+        this.update();
+    }
 
-Library.prototype.update = function () {
-    // re-render library with updated books in library object
-    const libraryEl = document.querySelector('.library-grid');
-    libraryEl.innerHTML = '';
-    this.render(this.books);
-}
+    update() {
+        // re-render library with updated books in library object
+        const libraryEl = document.querySelector('.library-grid');
+        libraryEl.innerHTML = '';
+        this.render(this.books);
+    }
 
-// library render logic
-Library.prototype.render = function (books) {
-    const libraryEl = document.querySelector('.library-grid');
+    // library render logic
+    render(books) {
+        const libraryEl = document.querySelector('.library-grid');
 
-    books.forEach((book, i) => {
-        const bookEl = document.createElement('div');
-        bookEl.classList.add('book');
-        bookEl.setAttribute('data-book-id', i);
-        book.haveRead ? bookEl.classList.add('read') : '';
+        books.forEach((book, i) => {
+            const bookEl = document.createElement('div');
+            bookEl.classList.add('book');
+            bookEl.setAttribute('data-book-id', i);
+            book.haveRead ? bookEl.classList.add('read') : '';
 
-        // book elements
-        const titleEl = document.createElement('h3');
-        titleEl.textContent = book.title;
+            // book elements
+            const titleEl = document.createElement('h3');
+            titleEl.textContent = book.title;
 
-        const authorEl = document.createElement('h6');
-        authorEl.textContent = book.author;
+            const authorEl = document.createElement('h6');
+            authorEl.textContent = book.author;
 
-        const pagesEl = document.createElement('p');
-        pagesEl.classList.add('pages');
-        pagesEl.textContent = book.pages;
+            const pagesEl = document.createElement('p');
+            pagesEl.classList.add('pages');
+            pagesEl.textContent = book.pages;
 
-        // status & buttons
-        const statusEl = document.createElement('div');
-        statusEl.classList.add('status');
+            // status & buttons
+            const statusEl = document.createElement('div');
+            statusEl.classList.add('status');
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
 
-        const readBtn = document.createElement('button');
-        readBtn.textContent = 'Read'
+            const readBtn = document.createElement('button');
+            readBtn.textContent = 'Read'
 
-        // append elements (add to DOM)
-        bookEl.appendChild(titleEl);
-        bookEl.appendChild(authorEl);
-        bookEl.appendChild(pagesEl);
-        bookEl.appendChild(statusEl);
+            // append elements (add to DOM)
+            bookEl.appendChild(titleEl);
+            bookEl.appendChild(authorEl);
+            bookEl.appendChild(pagesEl);
+            bookEl.appendChild(statusEl);
 
-        statusEl.appendChild(readBtn);
-        statusEl.appendChild(removeBtn);
+            statusEl.appendChild(readBtn);
+            statusEl.appendChild(removeBtn);
 
-        libraryEl.appendChild(bookEl);
+            libraryEl.appendChild(bookEl);
 
-        // event listeners
-        readBtn.addEventListener('click', () => {
-            // bookEl.classList.toggle('read');
-            const bookId = bookEl.dataset.bookId;
-            const book = library.books[bookId];
-            book.toggleReadStatus();
-            book.haveRead ? bookEl.classList.add('read') : bookEl.classList.remove('read');
-        })
+            // event listeners
+            readBtn.addEventListener('click', () => {
+                // bookEl.classList.toggle('read');
+                const bookId = bookEl.dataset.bookId;
+                const book = library.books[bookId];
+                book.toggleReadStatus();
+                book.haveRead ? bookEl.classList.add('read') : bookEl.classList.remove('read');
+            })
 
-        removeBtn.addEventListener('click', () => {
-            const bookId = bookEl.dataset.bookId
-            library.removeBook(bookId);
+            removeBtn.addEventListener('click', () => {
+                const bookId = bookEl.dataset.bookId
+                library.removeBook(bookId);
+            });
         });
-    });
-};
-
+    };
+}
 
 
 // form logic
@@ -131,13 +134,14 @@ function setupFormListeners() {
     });
 }
 
-// initializations
+// library initialization with default constructor
 const library = new Library();
 setupFormListeners();
 
-// default books
+// default books initializations
 const eatThatFrog = new Book("Eat That Frog", "Brian Tracy", 144, true);
 const healYourLife = new Book("You Can Heal Your Life", "Louise Hay", 272, false);
+
 library.addBook(eatThatFrog);
 library.addBook(healYourLife);
 
