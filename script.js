@@ -22,15 +22,15 @@ function Library() {
 // prototype methods (used for efficient memory usage)
 Library.prototype.addBook = function (book) {
     this.books.push(book);
-    this.updateLibrary();
+    this.update();
 };
 
 Library.prototype.removeBook = function (id) {
     this.books.splice(id, 1);
-    this.updateLibrary();
+    this.update();
 }
 
-Library.prototype.updateLibrary = function () {
+Library.prototype.update = function () {
     // re-render library with updated books in library object
     const libraryEl = document.querySelector('.library-grid');
     libraryEl.innerHTML = '';
@@ -123,19 +123,17 @@ function setupFormListeners() {
 
 
         const newBook = new Book(title, author, pages, readStatus);
-        // myLibrary.push(newBook);
-        // updateLibrary();
         library.addBook(newBook);
 
         dialog.close();
     });
 }
 
-// initializations
+// library initialization
 const library = new Library();
 setupFormListeners();
 
-// default books
+// default book initializations
 const eatThatFrog = new Book("Eat That Frog", "Brian Tracy", 144, true);
 const healYourLife = new Book("You Can Heal Your Life", "Louise Hay", 272, false);
 library.addBook(eatThatFrog);
